@@ -10,6 +10,8 @@ public class NumberInventory : MonoBehaviour
     private int sizeIncreaseIndex = 0;
 
     public int maxNumberValue = 99;
+    public GameObject slotGrid;
+    public GameObject numbersParentTransform;
     public GameObject slotPrefab;
     public GameObject numberPrefab;
     [HideInInspector] public List<NumberSlot> slots;
@@ -46,23 +48,16 @@ public class NumberInventory : MonoBehaviour
 
         for(int i=0; i<size; i++)
 		{
-            var newSlot = Instantiate(slotPrefab, this.transform);
+            var newSlot = Instantiate(slotPrefab, slotGrid.transform);
             var newNumberSlotComponent = newSlot.GetComponent<NumberSlot>();
             newNumberSlotComponent.OnSlotEmpty += () => numberCount--;
             newNumberSlotComponent.OnSlotPut += () => numberCount++;
             slots.Add(newNumberSlotComponent);
         }
 
-        var targetDepthValue = targetDepth.currentValue;
-        var currentDepthValue = currentDepth.currentValue;
+        StartCoroutine(SetNumbersAtEndOfFrame());
 
-        List<int> numberSet = GenerateNumberValueSet(targetDepthValue - currentDepthValue, size);
-
-        for(int i=0; i<size; i++)
-		{
-            CreateNumberInSlot(slots[i], numberSet[i]);
-        }
-	}
+    }
 
 	private void ClearSlots()
 	{
@@ -73,6 +68,32 @@ public class NumberInventory : MonoBehaviour
 		}
         slots.Clear();
 	}
+
+    private IEnumerator SetNumbersAtEndOfFrame()
+	{
+        yield return new WaitForEndOfFrame();
+        for(int i=0; i<size; i++)
+		{
+            slots[i].transform.SetParent(this.transform, true);
+		}
+        StartCoroutine(SetSlotsBackToGridEndOfFrame());
+    }
+
+    private IEnumerator SetSlotsBackToGridEndOfFrame()
+	{
+        yield return new WaitForEndOfFrame();
+        var targetDepthValue = targetDepth.currentValue;
+        var currentDepthValue = currentDepth.currentValue;
+
+        List<int> numberSet = GenerateNumberValueSet(targetDepthValue - currentDepthValue, size);
+
+        for (int i = 0; i < size; i++)
+        {
+            CreateNumberInSlot(slots[i], numberSet[i]);
+            slots[i].transform.SetParent(slotGrid.transform);
+        }
+
+    }
 
 	private List<int> GenerateNumberValueSet(int value, int size)
 	{
@@ -99,16 +120,23 @@ public class NumberInventory : MonoBehaviour
 		{
             slot.Clear();
 		}
-        var newNumber = Instantiate(numberPrefab, slot.transform);
+        var newNumber = Instantiate(numberPrefab, this.transform);
+        var newPos = slot.transform.localPosition;
+        Debug.Log("new position: " + newPos);
+        //RectTransformUtility.WorldToScreenPoint(null, slot.GetComponent<RectTransform>().TransformPoint(slot.transform.localPosition));
+        //newNumber.transform.localPosition = newPos;
         var newNumberComponent = newNumber.GetComponent<Number>();
         newNumberComponent.NumberValue = value;
+        newNumberComponent.dragAndDropComponent.StartPosition = newPos;
+        newNumberComponent.transform.localPosition = newPos;
         slot.Number = newNumberComponent;
     }
 
     public void CreateNumberInAnySlot(int value)
 	{
 		NumberSlot freeSlot = GetFirstFreeSlot();
-        var newNumber = Instantiate(numberPrefab, freeSlot.transform);
+        var newNumber = Instantiate(numberPrefab, numbersParentTransform.transform);
+        newNumber.transform.position = freeSlot.transform.position;
         var newNumberComponent = newNumber.GetComponent<Number>();
         newNumberComponent.NumberValue = value;
         freeSlot.Number = newNumberComponent;

@@ -52,6 +52,11 @@ public class OperationStack : MonoBehaviour
 
 	public void ResetOperations()
 	{
-		operationStack.Clear();
+		List<Operation> operations = new List<Operation>();
+		while(operationStack.Count > 0)
+		{
+			Destroy(operationStack.Pop().number.gameObject);
+		}
+		//operationStack.Clear();
 	}
 }

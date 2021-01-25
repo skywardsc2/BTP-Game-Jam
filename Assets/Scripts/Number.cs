@@ -14,7 +14,7 @@ public class Number : MonoBehaviour
 	public event OnNumberConsumedHandler OnNumberConsumed;
 	public event OnNumberReenabledHandler OnNumberReenabled;
 
-	private DragAndDrop dragAndDropComponent;
+	public DragAndDrop dragAndDropComponent;
 
 	public int NumberValue
 	{

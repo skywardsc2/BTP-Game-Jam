@@ -39,7 +39,7 @@ public class NumberInventory : MonoBehaviour
         ClearSlots();
 
         setupCounter++;
-        if(sizeIncreaseIndex < increaseSizeOn.Count && setupCounter == increaseSizeOn[sizeIncreaseIndex])
+        if(increaseSizeOn != null && sizeIncreaseIndex < increaseSizeOn.Count && setupCounter == increaseSizeOn[sizeIncreaseIndex])
 		{
             size++;
             sizeIncreaseIndex++;

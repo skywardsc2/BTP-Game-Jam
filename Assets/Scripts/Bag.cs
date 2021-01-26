@@ -10,8 +10,10 @@ public class Bag : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerEx
 {
 	private Image image;
 	private Color initialColor;
+	private Animator animator;
 
 	public int valueMultiplier = -1;
+	public string animatorOpenParameterName;
 	public CurrentDepth currentDepth;
 
 	public event OnNumberDropHandler OnNumberDrop;
@@ -19,6 +21,7 @@ public class Bag : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerEx
 	private void Start()
 	{
 		image = GetComponentInChildren<Image>();
+		animator = GetComponentInChildren<Animator>();
 		initialColor = image.color;
 	}
 
@@ -39,12 +42,14 @@ public class Bag : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerEx
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		if(eventData.dragging)
-			image.color = new Color(255, 255, 0);
+		Debug.Log("Mouse Entered Bag");
+		if (eventData.dragging)
+			animator.SetBool(animatorOpenParameterName, true);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		image.color = initialColor;
+		Debug.Log("Mouse Left Bag");
+		animator.SetBool(animatorOpenParameterName, false);
 	}
 }

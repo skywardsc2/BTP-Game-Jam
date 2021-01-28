@@ -10,14 +10,14 @@ public class PulseLooping : MonoBehaviour
 
     private Vector3 to;
     private LTDescr descr;
-    // Start is called before the first frame update
-    void Start()
+    
+    private void Start()
     {
         to = gameObject.transform.localScale * scaleFactor;
         descr = LeanTween.scale(gameObject, to, time).setEase(easeType).setLoopPingPong();
     }
 
-    public void Stop()
+    public void PausePulsing()
 	{
         descr.pause();
 	}

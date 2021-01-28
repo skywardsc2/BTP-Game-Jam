@@ -46,7 +46,6 @@ public class OperationStack : MonoBehaviour
 
 	public void PushNumberOperation(Number number, int multiplier)
 	{
-		Debug.Log("Push " + number.NumberValue);
 		operationStack.Push(new Operation(number, multiplier));
 	}
 
@@ -57,6 +56,5 @@ public class OperationStack : MonoBehaviour
 		{
 			Destroy(operationStack.Pop().number.gameObject);
 		}
-		//operationStack.Clear();
 	}
 }

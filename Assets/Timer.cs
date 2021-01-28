@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,10 +11,11 @@ public class Timer : MonoBehaviour
     public float currentMaxTime = 59;
     public float maxTimeDecreaseAmount = 10;
     public float timeRemaining = 10;
+    public GameState gameState;
 
     public List<int> decreaseMaxTimeOn;
     private int decreaseMaxTimeIndex = 0;
-    private int timerResetCounter = 0;
+    private int timerSetupCounter = 0;
 
     public bool timerIsRunning = false;
     
@@ -24,10 +26,10 @@ public class Timer : MonoBehaviour
         // Starts the timer automatically
         timeText = GetComponent<TextMeshProUGUI>();
 
-        SetupTimer();
+        ResetTimer();
     }
 
-    void Update()
+	void Update()
     {
         if (timerIsRunning)
         {
@@ -41,6 +43,7 @@ public class Timer : MonoBehaviour
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
+                gameState.EndGame();
             }
         }
     }
@@ -55,10 +58,10 @@ public class Timer : MonoBehaviour
         timeText.SetText(string.Format("{0:00}:{1:00}", minutes, seconds));
     }
 
-	public void ResetTimer()
+	public void SetupTimer()
 	{
-        timerResetCounter++;
-        if(decreaseMaxTimeOn != null && decreaseMaxTimeIndex < decreaseMaxTimeOn.Count && timerResetCounter == decreaseMaxTimeOn[decreaseMaxTimeIndex])
+        timerSetupCounter++;
+        if(decreaseMaxTimeOn != null && decreaseMaxTimeIndex < decreaseMaxTimeOn.Count && timerSetupCounter == decreaseMaxTimeOn[decreaseMaxTimeIndex])
 		{
             decreaseMaxTimeIndex++;
             currentMaxTime -= maxTimeDecreaseAmount;
@@ -68,13 +71,23 @@ public class Timer : MonoBehaviour
         timerIsRunning = true;
 	}
 
-    public void SetupTimer()
+    public void ResetTimer()
 	{
         timerIsRunning = true;
         timeRemaining = initalMaxTime;
         currentMaxTime = initalMaxTime;
 
-        timerResetCounter = 0;
+        timerSetupCounter = 0;
         decreaseMaxTimeIndex = 0;
     }
+
+    public void Pause()
+	{
+        timerIsRunning = false;
+	}
+
+    public void Resume()
+	{
+        timerIsRunning = true;
+	}
 }

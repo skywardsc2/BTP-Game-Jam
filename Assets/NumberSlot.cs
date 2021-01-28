@@ -48,4 +48,9 @@ public class NumberSlot : MonoBehaviour
 		IsEmpty = false;
 		OnSlotPut?.Invoke();
 	}
+
+	private void Update()
+	{
+		//Debug.Log(GetComponent<RectTransform>().localP);
+	}
 }

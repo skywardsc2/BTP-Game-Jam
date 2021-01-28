@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CurrentDepth
   - TargetDepth
+  - Timer
   layers:
   - Default
   - TransparentFX

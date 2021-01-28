@@ -27,7 +27,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 		Vector3 wordPoint = new Vector3();
 		RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, Input.mousePosition, Camera.main, out wordPoint);
 		transform.position = wordPoint;
-		Debug.Log("OnDrag");
+		//Debug.Log("OnDrag");
     }
 
 	public void OnBeginDrag(PointerEventData eventData)
@@ -35,13 +35,13 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 		SetCanvasGroupBlockRaycast(false);
 		StopAllCoroutines();
 		//StopCoroutine(moveToStartPosition());
-		Debug.Log("OnBeginDrag");
+		//Debug.Log("OnBeginDrag");
 	}
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
 		SetCanvasGroupBlockRaycast(true);
-		Debug.Log("OnEndDrag");
+		//Debug.Log("OnEndDrag");
 		LerpToInitialPosition();
 	}
 

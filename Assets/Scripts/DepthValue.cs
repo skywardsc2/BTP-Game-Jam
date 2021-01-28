@@ -25,4 +25,9 @@ public abstract class DepthValue : MonoBehaviour
 		UIText.SetText(newValue.ToString());
 		OnValueUpdate?.Invoke();
 	}
+
+	public void RestartValue()
+	{
+		UpdateValue(initialValue);
+	}
 }

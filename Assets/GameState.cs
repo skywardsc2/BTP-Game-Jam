@@ -7,10 +7,16 @@ public class GameState : MonoBehaviour
 {
     public UnityEvent OnGameLoad;
     public UnityEvent OnGameStart;
+	public UnityEvent OnConfirmPressed;
     public UnityEvent OnGameEnd;
     public UnityEvent OnGameRestart;
 
-    public void StartGame()
+	[HideInInspector] public int confirmTimes = 0;
+	public int confirmsToWin = 10;
+
+	public bool playerWon = false;
+
+	public void StartGame()
 	{
         OnGameStart.Invoke();
 	}
@@ -28,5 +34,24 @@ public class GameState : MonoBehaviour
     public void RestartGame()
 	{
         OnGameRestart.Invoke();
+	}
+
+	public void IncreaseConfirmTimes()
+	{
+		confirmTimes++;
+		if (confirmTimes == confirmsToWin)
+		{
+			playerWon = true;
+			EndGame();
+		} else
+		{
+			OnConfirmPressed?.Invoke();
+		}
+	}
+
+	public void ResetConfirmTimes()
+	{
+		playerWon = false;
+		confirmTimes = 0;
 	}
 }

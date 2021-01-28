@@ -188,7 +188,7 @@ public class NumberInventory : MonoBehaviour
             var minVal = Mathf.Max(0, currVal - maxNumberValue);
             var maxVal = Mathf.Min(value + maxNumberValue, currVal + maxNumberValue);
             var nextVal = Random.Range(minVal, maxVal+1);
-            Debug.Log("value: " + value + "min: " + " " + minVal + " max: " + maxVal + " val: " + nextVal);
+            //Debug.Log("value: " + value + "min: " + " " + minVal + " max: " + maxVal + " val: " + nextVal);
             while(nextVal == currVal || nextVal == value)
 			{
                 nextVal = Random.Range(minVal, maxVal);

@@ -36,6 +36,14 @@ public class Number : MonoBehaviour
 		dragAndDropComponent = GetComponent<DragAndDrop>();
 	}
 
+	private void Start()
+	{
+		float cameraHeight = Camera.main.scaledPixelHeight;
+		Vector3 initialPosition = new Vector3(transform.position.x, transform.position.y + cameraHeight, transform.position.z);
+		transform.position = initialPosition;
+		dragAndDropComponent.LerpToInitialPosition();
+	}
+
 	public void Consume()
 	{
 		OnNumberConsumed?.Invoke();

@@ -13,10 +13,10 @@ public class UpdateScore : MonoBehaviour
 	{
 		currentDepth = GameObject.FindGameObjectWithTag("CurrentDepth").GetComponent<CurrentDepth>();
 		textGUI = GetComponent<TextMeshProUGUI>();
-		textGUI.SetText($"YOU DIVED {-1 * currentDepth.currentValue:D3} METERS");
+		textGUI.SetText($"YOU DIVED {-1 * currentDepth.currentBaseValue:D3} METERS");
 	}
 	public void UpdateScoreText()
 	{
-		textGUI.SetText($"YOU DIVED {-1 * currentDepth.currentValue} METERS");
+		textGUI.SetText($"YOU DIVED {-1 * currentDepth.currentBaseValue} METERS");
 	}
 }

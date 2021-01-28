@@ -44,12 +44,32 @@ public class Bag : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerEx
 	{
 		//Debug.Log("Mouse Entered Bag");
 		if (eventData.dragging)
-			animator.SetBool(animatorOpenParameterName, true);
+			OpenAnimationAfterSeconds(0);
+	}
+
+	public void OpenAnimationAfterSeconds(float time)
+	{
+		Invoke(nameof(OpenAnimationNow), time);
+	}
+
+	private void OpenAnimationNow()
+	{
+		animator.SetBool(animatorOpenParameterName, true);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		//Debug.Log("Mouse Left Bag");
+		CloseAnimationAfterSeconds(0);
+	}
+
+	public void CloseAnimationAfterSeconds(float time)
+	{
+		Invoke(nameof(CloseAnimationNow), time);
+	}
+
+	private void CloseAnimationNow()
+	{
 		animator.SetBool(animatorOpenParameterName, false);
 	}
 }

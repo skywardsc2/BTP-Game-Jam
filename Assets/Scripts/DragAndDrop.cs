@@ -53,6 +53,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 	public void LerpToInitialPosition()
 	{
 		StartCoroutine(moveToStartPosition());
+		//LeanTween.move(gameObject, startPosition, 1f);
 	}
 
 	private IEnumerator moveToStartPosition()

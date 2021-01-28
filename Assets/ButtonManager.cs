@@ -7,15 +7,14 @@ public class ButtonManager : MonoBehaviour
 {
     public GameObject UndoButton;
     public GameObject ConfirmButton;
-	[HideInInspector] public DepthValue CurrentDepth;
-	[HideInInspector] public DepthValue TargetDepth;
+	[HideInInspector] public CurrentDepth currentDepth;
+	[HideInInspector] public TargetDepth targetDepth;
 	[HideInInspector] public Timer timer;
 	public NumberInventory NumberInventory;
 
 	public string CurrentDepthTag;
 	public string TargetDepthTag;
 	public string TimerTag;
-
 
 	//private GameObject activeButton;
 	//private GameObject inactiveButton;
@@ -24,11 +23,11 @@ public class ButtonManager : MonoBehaviour
 	{
 		ResetButtons();
 
-		CurrentDepth = GameObject.FindGameObjectWithTag(CurrentDepthTag).GetComponent<DepthValue>();
-		TargetDepth = GameObject.FindGameObjectWithTag(TargetDepthTag).GetComponent<DepthValue>();
+		currentDepth = GameObject.FindGameObjectWithTag(CurrentDepthTag).GetComponent<CurrentDepth>();
+		targetDepth = GameObject.FindGameObjectWithTag(TargetDepthTag).GetComponent<TargetDepth>();
 		timer = GameObject.FindGameObjectWithTag(TimerTag).GetComponent<Timer>();
 
-		CurrentDepth.OnValueUpdate += OnCurrentDepthUpdate;
+		currentDepth.OnValueUpdate += OnCurrentDepthUpdate;
 	}
 
 	public void ResetButtons()
@@ -41,9 +40,10 @@ public class ButtonManager : MonoBehaviour
 
 	private void OnCurrentDepthUpdate()
 	{
-		if(CurrentDepth.currentValue == TargetDepth.currentValue && NumberInventory.NumberCount == 0)
+		if(currentDepth.currentValue == targetDepth.currentValue && NumberInventory.NumberCount == 0)
 		{
 			//Debug.Log("OnCurrentDepthUpdate called");
+			currentDepth.UpdateBaseValue(targetDepth.currentValue);
 			SwapButtons();
 			timer.Pause();
 		}

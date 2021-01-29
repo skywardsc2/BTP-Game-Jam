@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void OnSubmarineMovedHandler(float distance, float moveTime, LeanTweenType easeType);
+
 public class MovingSubmarine : MonoBehaviour
 {
     public float distance;
@@ -11,6 +13,8 @@ public class MovingSubmarine : MonoBehaviour
 	[HideInInspector] public Vector3 initialPosition;
 	public SpriteRenderer bgSpriteRenderer;
 	public GameState gameState;
+
+	public OnSubmarineMovedHandler OnSubmarineMoved;
 
 	private void Start()
 	{
@@ -28,13 +32,6 @@ public class MovingSubmarine : MonoBehaviour
 
 	private void CalculateDistanceToMove()
 	{
-		//float textureHeight = spriteRenderer.sprite.rect.height;
-		//float pixelsPerUnit = spriteRenderer.sprite.pixelsPerUnit;
-		//float maxTravelDistance = (textureHeight/pixelsPerUnit) - Camera.main.scaledPixelHeight;
-		//distance = textureHeight / ((gameState.confirmsToWin) * pixelsPerUnit);
-
-		//Debug.Log("( " + textureHeight + " - " + Camera.main.scaledPixelHeight + " ) / ( " + gameState.confirmsToWin + " * " + pixelsPerUnit + " ) = " + distance);
-
 		var bounds = bgSpriteRenderer.sprite.bounds;
 		var spriteHeight = bounds.size.y;
 		var maxTravelDistance = spriteHeight - 2 * Camera.main.orthographicSize;
@@ -46,14 +43,13 @@ public class MovingSubmarine : MonoBehaviour
 
 	public void MoveDown()
 	{
-		//Vector3 newPosition = new Vector3(transform.position.x, transform.position.y + distance, transform.position.z);
-		//transform.position = newPosition;
-
 		LeanTween.moveY(gameObject, transform.position.y - distance, moveTime).setEase(easeType);
+		OnSubmarineMoved?.Invoke(-distance, moveTime, easeType);
 	}
 
 	public void MoveBackToStart()
 	{
 		LeanTween.moveY(gameObject, initialPosition.y, moveTime).setEase(easeType);
+		OnSubmarineMoved?.Invoke(initialPosition.y - transform.position.y, moveTime, easeType);
 	}
 }

@@ -7,6 +7,8 @@ TagManager:
   - CurrentDepth
   - TargetDepth
   - Timer
+  - Ball SFX
+  - BG Noise
   layers:
   - Default
   - TransparentFX

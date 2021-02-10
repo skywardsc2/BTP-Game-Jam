@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class MovingSubmarine : MonoBehaviour
 	public GameState gameState;
 
 	public OnSubmarineMovedHandler OnSubmarineMoved;
+	public CinemachineVirtualCamera vcam;
 
 	private void Start()
 	{
@@ -34,7 +36,11 @@ public class MovingSubmarine : MonoBehaviour
 	{
 		var bounds = bgSpriteRenderer.sprite.bounds;
 		var spriteHeight = bounds.size.y;
-		var maxTravelDistance = spriteHeight - 2 * Camera.main.orthographicSize;
+
+		var cinemachineComposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
+		var offsetY = cinemachineComposer.m_TrackedObjectOffset.y;
+
+		var maxTravelDistance = spriteHeight - 2 * Camera.main.orthographicSize + offsetY;
 
 		distance = maxTravelDistance / gameState.confirmsToWin;
 

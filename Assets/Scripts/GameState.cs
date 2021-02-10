@@ -16,6 +16,11 @@ public class GameState : MonoBehaviour
 
 	public bool playerWon = false;
 
+	private void Start()
+	{
+		LoadGame();
+	}
+
 	public void StartGame()
 	{
         OnGameStart.Invoke();

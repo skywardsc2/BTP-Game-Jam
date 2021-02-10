@@ -17,7 +17,8 @@ public class Timer : MonoBehaviour
     private int decreaseMaxTimeIndex = 0;
     private int timerSetupCounter = 0;
 
-    public bool timerIsRunning = false;
+    public bool runOnStart = false;
+    [HideInInspector] public bool timerIsRunning = false;
     
     private TextMeshProUGUI timeText;
 
@@ -27,6 +28,8 @@ public class Timer : MonoBehaviour
         timeText = GetComponent<TextMeshProUGUI>();
 
         ResetTimer();
+
+        timerIsRunning = runOnStart;
     }
 
 	void Update()
@@ -76,6 +79,7 @@ public class Timer : MonoBehaviour
         timerIsRunning = true;
         timeRemaining = initalMaxTime;
         currentMaxTime = initalMaxTime;
+        DisplayTime(timeRemaining);
 
         timerSetupCounter = 0;
         decreaseMaxTimeIndex = 0;

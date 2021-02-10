@@ -32,6 +32,7 @@ public class Bag : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerEx
 			Number number = eventData.pointerDrag.GetComponent<Number>();
 			if(number != null)
 			{
+				GameObject.FindGameObjectWithTag("Ball SFX")?.GetComponent<AudioManager>()?.PlayRandom();
 				var newValue = currentDepth.currentValue + number.NumberValue * valueMultiplier;
 				OnNumberDrop?.Invoke(number, valueMultiplier);
 				number.Consume();

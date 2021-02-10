@@ -17,7 +17,8 @@ public class ProgressBar : MonoBehaviour
 
 	private void Start()
 	{
-		var barHeight = bar.GetComponent<RectTransform>().sizeDelta.y;
+		//var barHeight = bar.GetComponent<RectTransform>().sizeDelta.y;
+		var barHeight = bar.sprite.rect.height;
 		var bgHeight = bgSpriteRenderer.sprite.bounds.size.y;
 		scale = (barHeight - 2 * iconMarginFromBarTop) / bgHeight;
 
